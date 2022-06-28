@@ -29,13 +29,13 @@ def make_corp_flist(corp_name_req, finpath):
     print(corp_name_req, finpath)
     
     file_list = os.listdir(finpath)
-    file_list_xls = [file for file in file_list if file.endswith(".xls")]
+    file_list_xls = [file for file in file_list if file.endswith('.xls') or file.endswith('.xlsx')]
 
     # make dict flist for corp_name
     # unicodedata for 한글자모합치기
     flist_get = {}
-    for xlss in file_list_xls:
-        fname = unicodedata.normalize('NFC', os.path.splitext(os.path.basename(xlss))[0])
+    for f in file_list_xls:
+        fname = unicodedata.normalize('NFC', f)
         corp_name_found = fname.split(']')[0].split('[')[1]
         #print(corp_name_found, len(corp_name_found))
         if corp_name_req == corp_name_found:
@@ -60,3 +60,4 @@ def make_corp_flist(corp_name_req, finpath):
 if __name__=="__main__":
     print(__name__)
     fin_xls_list = make_corp_flist('가비아', './findata/')
+    print(fin_xls_list)
