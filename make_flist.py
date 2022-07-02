@@ -25,7 +25,7 @@ def make_report_str(d_data, filename):
     
     return rep_str
 
-def make_corp_flist(corp_name_req, finpath):
+def make_corp_f_dict(corp_name_req, finpath):
     print(corp_name_req, finpath)
     
     file_list = os.listdir(finpath)
@@ -59,5 +59,5 @@ def make_corp_flist(corp_name_req, finpath):
 
 if __name__=="__main__":
     print(__name__)
-    fin_xls_list = make_corp_flist('가비아', './findata/')
-    print(fin_xls_list)
+    fin_xls_dict = make_corp_f_dict('가비아', './findata/')
+    print(fin_xls_dict)
