@@ -5,6 +5,8 @@ import re
 import unicodedata
 import pandas as pd
 
+from make_acct_list import *
+
 # return 별도, 연결 list
 def get_sheet_list(src_file):
     sh_list = []
@@ -122,12 +124,13 @@ def get_won_unit(df):
     
     return won_unit
 
+# req_list에 있는 계정을 찾지 못하면 '0'값으로 채울 수 있도록
 def get_value_of_item(df, fs_type, req_list, unit):
     item_val_dict = {}
 
     for req_acct in req_list:
+        item_val_dict[req_acct] = 0
         for item, value in zip(df.loc[6:, 'item'], df.loc[6:, 'value']):
-            # print(req_acct, item, value)
             if type(item) is not int and type(item) is not float:
                 item_name = item.replace(" ","")
                 if req_acct in item_name:
@@ -138,16 +141,19 @@ def get_value_of_item(df, fs_type, req_list, unit):
                     else:
                         #print(item_name, 'int', value)
                         item_val_dict[req_acct] = value/unit
-                    break
-    
-    #print(item_val_dict)
-    
+                    break        
+        # print(req_acct, item, value)
+       
     return item_val_dict
 
 if __name__=="__main__":
     print(__name__)
     
     src_file = './findata/' + '[가비아]분기보고서_재무제표(2007.11.14)_ko.xls'
+
+    sf_list = make_item_info('./resource/'+'sf.txt')
+    sc_list = make_item_info('./resource/'+'sc.txt')
+    si_list = make_item_info('./resource/'+'si.txt')
     
     sh_list, consh_list = get_sheet_list(src_file)
     print(sh_list)
@@ -159,13 +165,13 @@ if __name__=="__main__":
 
         if sh == '연결 재무상태표' or sh == '재무상태표' or sh == '대차대조표':
             sh_type = '재무'
-            item_list = ['유동자산', '비유동자산', '유동부채', '비유동부채']
+            item_list = sf_list
         elif sh == '연결 손익계산서' or sh == '연결 포괄손익계산서' or sh == '손익계산서' or sh == '포괄손익계산서':
             sh_type = '손익'
-            item_list = ['매출액']
+            item_list = si_list
         else: #sh == '연결 현금흐름표' or sh == '현금흐름표':
             sh_type = '현금'
-            item_list = ['당기순이익']
+            item_list = sc_list
 
         val_dict = get_value_of_item(con_sf, sh_type, item_list, unit)
         for k, v in val_dict.items():

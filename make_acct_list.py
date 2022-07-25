@@ -18,13 +18,13 @@ def make_item_info(txt_f):
         #print(line)
         item_list.append(line)
     f.close()
-  
+
     return item_list
 
 if __name__=="__main__":
     print(__name__)
     
-    txt_file = './resource/' + 'sf.txt'
+    txt_file = './resource/' + 'sc.txt'
     
     sf_list = make_item_info(txt_file)
     for item in sf_list:
