@@ -25,7 +25,7 @@ def get_corp_df():
     try:
         df = pd.read_excel(f_name, names=['code', 'name'], usecols=[1, 3], engine=engin_name)
     except FileNotFoundError as e:
-        print(e, src_file, " is not found.")
+        print(e, f_name, " is not found.")
         print(e)
     except ValueError as e:
         print(e)
@@ -109,11 +109,11 @@ if __name__=="__main__":
     write_header(sheet)
     wb.save(fname)
     
-    #dfcodes = get_corp_df()
+    dfcodes = get_corp_df()
 
-    corp_name = ['삼성전자']
-    corp_id = ['005930']
-    dfcodes = pd.DataFrame({'id':corp_id, 'name':corp_name})
+    #corp_name = ['삼성전자']
+    #corp_id = ['005930']
+    #dfcodes = pd.DataFrame({'id':corp_id, 'name':corp_name})
     rown = 3
     for i in range(len(dfcodes)):
         wb = load_workbook(filename = fname)
@@ -175,7 +175,7 @@ if __name__=="__main__":
             print('', '0', end='')
         
         #손익
-        print(main_tbl[10])
+        #print(main_tbl[10])
         try:
             #매출액
             print('', main_tbl[10].iloc[0, 1], main_tbl[10].iloc[0, 2], main_tbl[10].iloc[0, 3], end='')
@@ -241,7 +241,7 @@ if __name__=="__main__":
         #except:
         #    print('', '0', '0', '0', end='')
 
-        #투자지표
+        #투자지표 FCF
         #print('')
         #print(invest_tbl[1])
         try:
