@@ -133,3 +133,5 @@ dmypy.json
 findata/
 result/
 tmp/
+
+.DS_Store
